@@ -1,25 +1,49 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import { ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core';
+import { HelmetProvider } from 'react-helmet-async';
+import { useHotkeys, useLocalStorage } from '@mantine/hooks';
+import Error404 from './components/pages/Error404/Error404';
+import AuthWrapper from './components/pages/Auth/AuthWrapper';
 
 function App() {
+  const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
+    key: 'mantine-color-scheme',
+    defaultValue: 'light',
+    getInitialValueInEffect: true,
+  });
+
+  // eslint-disable-next-line max-len
+  const toggleColorScheme = (value?: ColorScheme) => setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
+
+  // TODO: this is for shortcuts
+  useHotkeys([['mod+J', () => toggleColorScheme()]]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <HelmetProvider>
+      <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+        <MantineProvider
+          theme={{
+          // Override any other properties from default theme
+            fontFamily: 'Whitney,Helvetica Neue,Helvetica,Arial,sans-serif',
+            spacing: {
+              xs: 15, sm: 20, md: 25, lg: 30, xl: 40,
+            },
+            colorScheme,
+            primaryColor: 'orange',
+          }}
+          withGlobalStyles
+          withNormalizeCSS
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Routes>
+            <Route path="/" element={<AuthWrapper />}>
+              <Route path="/home" element={<div>Hello world</div>} />
+            </Route>
+            <Route path="*" element={<Error404 />} />
+          </Routes>
+        </MantineProvider>
+      </ColorSchemeProvider>
+    </HelmetProvider>
   );
 }
 
