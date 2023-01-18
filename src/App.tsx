@@ -12,6 +12,7 @@ import Error404 from './components/pages/Error404/Error404';
 import AuthWrapper from './components/pages/Auth/AuthWrapper';
 import Authentication from './components/pages/Authentication/Authentication';
 import Home from './components/pages/Home/Home';
+import Teams from './components/pages/Teams/Teams';
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ function App() {
               <Route path="/" element={<AuthWrapper />}>
                 <Route path="/sign-in" element={<Authentication />} />
                 <Route path="/" element={<Home />} />
+                <Route path="/teams" element={<Teams />} />
               </Route>
               <Route path="*" element={<Error404 />} />
             </Routes>
