@@ -1,6 +1,6 @@
 import { BACKEND_HOST, BACKEND_PORT } from '..';
 
-const path = `${BACKEND_HOST}${BACKEND_PORT}/api/v1/games`;
+const path = `${BACKEND_HOST}${BACKEND_PORT}/api/v1/auth`;
 
 type RegisterParams = {
   name: string;
@@ -13,7 +13,7 @@ type AuthenticateParams = {
   password: string;
 };
 
-export const register = async (registerParams: RegisterParams): Promise<any> => fetch(path, {
+export const register = async (registerParams: RegisterParams): Promise<any> => fetch(`${path}/register`, {
   method: 'POST',
   headers: {
     'Content-type': 'application/json',
@@ -21,7 +21,7 @@ export const register = async (registerParams: RegisterParams): Promise<any> => 
   body: JSON.stringify(registerParams),
 }).then((response) => response.json());
 
-export const authenticate = async (authenticateParams: AuthenticateParams): Promise<any> => fetch(path, {
+export const authenticate = async (authenticateParams: AuthenticateParams): Promise<any> => fetch(`${path}/authenticate`, {
   method: 'POST',
   headers: {
     'Content-type': 'application/json',
