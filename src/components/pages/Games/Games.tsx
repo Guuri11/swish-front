@@ -3,11 +3,11 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import { Container } from '@mantine/core';
 import HeaderMegaMenu from '../../common/Header/Header';
-import { findAllTeams } from '../../../services/api/team';
 import TableScrollArea from '../../common/Table/Table';
+import { findAllGames } from '../../../services/api/game';
 
-export default function Teams() {
-  const { data, status, error } = useQuery('teams', findAllTeams);
+export default function Games() {
+  const { data, status, error } = useQuery('games', findAllGames);
 
   return (
     <>
@@ -21,7 +21,7 @@ export default function Teams() {
       <Container>
 
         {data && data._embedded ? (
-          <TableScrollArea data={data._embedded.teamList} />
+          <TableScrollArea data={data._embedded.gameList} />
         ) : (
           <div>No results</div>
         )}

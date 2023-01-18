@@ -6,6 +6,7 @@ export const findAllTeamStats = async (): Promise<any> => fetch(`${path}`, {
   method: 'GET',
   headers: {
     'Content-type': 'application/json',
+    Authorization: `Bearer ${sessionStorage.getItem('token')}`,
   },
 }).then((response) => response.json());
 
@@ -13,6 +14,7 @@ export const getTeamStats = async (id: string): Promise<any> => fetch(`${path}/$
   method: 'GET',
   headers: {
     'Content-type': 'application/json',
+    Authorization: `Bearer ${sessionStorage.getItem('token')}`,
   },
 }).then((response) => response.json());
 
@@ -20,6 +22,7 @@ export const deleteTeamStats = async (id: string): Promise<any> => fetch(`${path
   method: 'DELETE',
   headers: {
     'Content-type': 'application/json',
+    Authorization: `Bearer ${sessionStorage.getItem('token')}`,
   },
 }).then((response) => response.json());
 
@@ -27,6 +30,7 @@ export const updateTeamStats = async (teamStats: TeamStats): Promise<any> => fet
   method: 'PUT',
   headers: {
     'Content-type': 'application/json',
+    Authorization: `Bearer ${sessionStorage.getItem('token')}`,
   },
 }).then((response) => response.json());
 
@@ -34,6 +38,7 @@ export const createTeamStats = async (teamStats: TeamStats): Promise<any> => fet
   method: 'POST',
   headers: {
     'Content-type': 'application/json',
+    Authorization: `Bearer ${sessionStorage.getItem('token')}`,
   },
   body: JSON.stringify(teamStats),
 }).then((response) => response.json());

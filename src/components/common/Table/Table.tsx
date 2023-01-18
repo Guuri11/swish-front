@@ -22,6 +22,13 @@ const useStyles = createStyles((theme) => ({
   scrolled: {
     boxShadow: theme.shadows.sm,
   },
+  tr: {
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: theme.colors.orange,
+      color: '#fff',
+    },
+  },
 }));
 
 interface TableScrollAreaProps {
@@ -29,16 +36,23 @@ interface TableScrollAreaProps {
 }
 
 export default function TableScrollArea({ data }: TableScrollAreaProps) {
+  console.log(data);
+
   const { classes, cx } = useStyles();
   const [scrolled, setScrolled] = useState(false);
 
   const rows = data.map((row) => (
-    <tr key={row.id}>
+    <tr className={classes.tr} key={row.id}>
       {
         Object.keys(row).map((key) => {
           if (key === '_links') {
             return null;
           }
+
+          if (typeof row[key] === 'object') {
+            return <td key={key}>{row[key].name}</td>;
+          }
+
           return <td key={key}>{row[key]}</td>;
         })
       }
@@ -54,7 +68,7 @@ export default function TableScrollArea({ data }: TableScrollAreaProps) {
               if (column === '_links') {
                 return null;
               }
-              return (<th key={column}>{column}</th>);
+              return (<th key={column}>{column === 'id' ? '#' : column.toUpperCase()}</th>);
             })}
           </tr>
         </thead>

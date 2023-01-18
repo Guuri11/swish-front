@@ -13,6 +13,8 @@ import AuthWrapper from './components/pages/Auth/AuthWrapper';
 import Authentication from './components/pages/Authentication/Authentication';
 import Home from './components/pages/Home/Home';
 import Teams from './components/pages/Teams/Teams';
+import Players from './components/pages/Players/Players';
+import Games from './components/pages/Games/Games';
 
 const queryClient = new QueryClient();
 
@@ -51,6 +53,8 @@ function App() {
                 <Route path="/sign-in" element={<Authentication />} />
                 <Route path="/" element={<Home />} />
                 <Route path="/teams" element={<Teams />} />
+                <Route path="/players" element={<Players />} />
+                <Route path="/games" element={<Games />} />
               </Route>
               <Route path="*" element={<Error404 />} />
             </Routes>
