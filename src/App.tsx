@@ -3,8 +3,16 @@ import { Route, Routes } from 'react-router-dom';
 import { ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core';
 import { HelmetProvider } from 'react-helmet-async';
 import { useHotkeys, useLocalStorage } from '@mantine/hooks';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
 import Error404 from './components/pages/Error404/Error404';
 import AuthWrapper from './components/pages/Auth/AuthWrapper';
+import Authentication from './components/pages/Authentication/Authentication';
+
+const queryClient = new QueryClient();
 
 function App() {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
@@ -20,30 +28,32 @@ function App() {
   useHotkeys([['mod+J', () => toggleColorScheme()]]);
 
   return (
-    <HelmetProvider>
-      <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-        <MantineProvider
-          theme={{
-          // Override any other properties from default theme
-            fontFamily: 'Whitney,Helvetica Neue,Helvetica,Arial,sans-serif',
-            spacing: {
-              xs: 15, sm: 20, md: 25, lg: 30, xl: 40,
-            },
-            colorScheme,
-            primaryColor: 'orange',
-          }}
-          withGlobalStyles
-          withNormalizeCSS
-        >
-          <Routes>
-            <Route path="/" element={<AuthWrapper />}>
-              <Route path="/home" element={<div>Hello world</div>} />
-            </Route>
-            <Route path="*" element={<Error404 />} />
-          </Routes>
-        </MantineProvider>
-      </ColorSchemeProvider>
-    </HelmetProvider>
+    <QueryClientProvider client={queryClient}>
+      <HelmetProvider>
+        <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+          <MantineProvider
+            theme={{
+              // Override any other properties from default theme
+              fontFamily: 'Whitney,Helvetica Neue,Helvetica,Arial,sans-serif',
+              spacing: {
+                xs: 15, sm: 20, md: 25, lg: 30, xl: 40,
+              },
+              colorScheme,
+              primaryColor: 'orange',
+            }}
+            withGlobalStyles
+            withNormalizeCSS
+          >
+            <Routes>
+              <Route path="/" element={<AuthWrapper />}>
+                <Route path="/sign-in" element={<Authentication />} />
+              </Route>
+              <Route path="*" element={<Error404 />} />
+            </Routes>
+          </MantineProvider>
+        </ColorSchemeProvider>
+      </HelmetProvider>
+    </QueryClientProvider>
   );
 }
 
