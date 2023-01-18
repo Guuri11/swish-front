@@ -12,12 +12,9 @@ const AuthPage: React.FunctionComponent = observer((): JSX.Element => {
 
   useEffect(() => {
     if (authenticationStore.token) {
-      console.log(authenticationStore.token);
-
       const userData = getSelf(authenticationStore.token);
       userData.then((user) => {
-        console.log(user);
-        // authenticationStore.setUser({ firebaseUser: currentUser, backendUser: result });
+        authenticationStore.setUser(user);
         setLoading(false);
       });
     } else {
