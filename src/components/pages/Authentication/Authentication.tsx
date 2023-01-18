@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthenticationStore } from '../../../hooks/store';
 import Background from '../../common/Background/Background';
 import { authenticate, register } from '../../../services/api/authenticate';
+import { getSelf } from '../../../services/api/user';
 
 export default function Authentication(props: PaperProps<'div'>) {
   const authenticationStore = useAuthenticationStore();
@@ -26,6 +27,7 @@ export default function Authentication(props: PaperProps<'div'>) {
   const form = useForm({
     initialValues: {
       email: '',
+      name: '',
       password: '',
       terms: true,
     },
@@ -33,6 +35,7 @@ export default function Authentication(props: PaperProps<'div'>) {
     validationRules: {
       email: (val) => /^\S+@\S+$/.test(val),
       password: (val) => val.length >= 6,
+      name: (val) => type === 'login' || val.length >= 1,
     },
   });
 
@@ -40,14 +43,18 @@ export default function Authentication(props: PaperProps<'div'>) {
     if (form.validate()) {
       let response;
       if (type === 'register') {
-        response = register({ email: form.values.email, password: form.values.password, name: '' });
+        response = register({ email: form.values.email, password: form.values.password, name: form.values.name });
       } else {
         response = authenticate({ email: form.values.email, password: form.values.password });
       }
       response.then((data) => {
         if (data.token) {
           authenticationStore.setToken(data.token);
-          navigate('/', { replace: true });
+          const userData = getSelf(authenticationStore.token);
+          userData.then((user) => {
+            authenticationStore.setUser(user);
+            navigate('/', { replace: true });
+          });
         } else {
           setError('Unhandle exception');
         }
@@ -85,6 +92,16 @@ export default function Authentication(props: PaperProps<'div'>) {
                   onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
                   error={form.errors.email && 'Invalid email'}
                 />
+                {type === 'register' && (
+                  <TextInput
+                    required
+                    label="Name"
+                    placeholder="Lebron James"
+                    value={form.values.name}
+                    onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
+                    error={form.errors.name && 'Invalid name'}
+                  />
+                )}
 
                 <PasswordInput
                   required

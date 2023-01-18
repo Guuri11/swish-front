@@ -3,6 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { useAuthenticationStore } from '../../../hooks/store';
 import Loading from '../Loading/Loading';
+import { getSelf } from '../../../services/api/user';
 
 const AuthPage: React.FunctionComponent = observer((): JSX.Element => {
   const authenticationStore = useAuthenticationStore();
@@ -11,8 +12,14 @@ const AuthPage: React.FunctionComponent = observer((): JSX.Element => {
 
   useEffect(() => {
     if (authenticationStore.token) {
-      // authenticationStore.setUser({ firebaseUser: currentUser, backendUser: result });
-      setLoading(false);
+      console.log(authenticationStore.token);
+
+      const userData = getSelf(authenticationStore.token);
+      userData.then((user) => {
+        console.log(user);
+        // authenticationStore.setUser({ firebaseUser: currentUser, backendUser: result });
+        setLoading(false);
+      });
     } else {
       navigate('/sign-in');
       setLoading(false);

@@ -16,6 +16,14 @@ export const getUser = async (id: string): Promise<any> => fetch(`${path}/${id}`
   },
 }).then((response) => response.json());
 
+export const getSelf = async (token: string): Promise<User> => fetch(`${path}/me`, {
+  method: 'GET',
+  headers: {
+    'Content-type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  },
+}).then((response) => response.json());
+
 export const deleteUser = async (id: string): Promise<any> => fetch(`${path}/${id}`, {
   method: 'DELETE',
   headers: {
