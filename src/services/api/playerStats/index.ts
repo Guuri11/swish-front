@@ -1,39 +1,39 @@
 import { BACKEND_HOST, BACKEND_PORT } from '..';
-import { Team } from '../../../types';
+import { Player } from '../../../types';
 
-const path = `${BACKEND_HOST}${BACKEND_PORT}/api/v1/teams_stats`;
-export const findAllTeams = async (): Promise<any> => fetch(`${path}`, {
+const path = `${BACKEND_HOST}${BACKEND_PORT}/api/v1/players_stats`;
+export const findAllPlayers = async (): Promise<any> => fetch(`${path}`, {
   method: 'GET',
   headers: {
     'Content-type': 'application/json',
   },
 }).then((response) => response.json());
 
-export const getTeam = async (id: string): Promise<any> => fetch(`${path}/${id}`, {
+export const getPlayer = async (id: string): Promise<any> => fetch(`${path}/${id}`, {
   method: 'GET',
   headers: {
     'Content-type': 'application/json',
   },
 }).then((response) => response.json());
 
-export const deleteTeam = async (id: string): Promise<any> => fetch(`${path}/${id}`, {
+export const deletePlayer = async (id: string): Promise<any> => fetch(`${path}/${id}`, {
   method: 'DELETE',
   headers: {
     'Content-type': 'application/json',
   },
 }).then((response) => response.json());
 
-export const updateTeam = async (team: Team): Promise<any> => fetch(`${path}/${team.id}`, {
+export const updatePlayer = async (player: Player): Promise<any> => fetch(`${path}/${player.id}`, {
   method: 'PUT',
   headers: {
     'Content-type': 'application/json',
   },
 }).then((response) => response.json());
 
-export const createTeam = async (team: Team): Promise<any> => fetch(path, {
+export const createPlayer = async (player: Player): Promise<any> => fetch(path, {
   method: 'POST',
   headers: {
     'Content-type': 'application/json',
   },
-  body: JSON.stringify(team),
+  body: JSON.stringify(player),
 }).then((response) => response.json());
