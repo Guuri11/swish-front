@@ -8,6 +8,7 @@ export type User = {
 };
 
 export type Team = {
+  id: number;
   name: string;
   location: string;
 };
