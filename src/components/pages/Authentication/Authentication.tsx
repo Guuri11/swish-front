@@ -18,7 +18,6 @@ export default function Authentication(props: PaperProps<'div'>) {
   const [error, setError] = useState<string | undefined>('');
 
   useEffect(() => {
-    console.log('bruh');
     if (authenticationStore.user) {
       navigate('/', { replace: true });
     }

@@ -36,8 +36,6 @@ interface TableScrollAreaProps {
 }
 
 export default function TableScrollArea({ data }: TableScrollAreaProps) {
-  console.log(data);
-
   const { classes, cx } = useStyles();
   const [scrolled, setScrolled] = useState(false);
 
