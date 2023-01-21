@@ -15,6 +15,7 @@ import Home from './components/pages/Home/Home';
 import Teams from './components/pages/Teams/Teams';
 import Players from './components/pages/Players/Players';
 import Games from './components/pages/Games/Games';
+import TeamView from './components/pages/Teams/TeamView';
 
 const queryClient = new QueryClient();
 
@@ -53,8 +54,11 @@ function App() {
                 <Route path="/sign-in" element={<Authentication />} />
                 <Route path="/" element={<Home />} />
                 <Route path="/teams" element={<Teams />} />
+                <Route path="/teams/:id" element={<TeamView />} />
                 <Route path="/players" element={<Players />} />
+                <Route path="/players/:id" element={<Players />} />
                 <Route path="/games" element={<Games />} />
+                <Route path="/games/:id" element={<Games />} />
               </Route>
               <Route path="*" element={<Error404 />} />
             </Routes>
