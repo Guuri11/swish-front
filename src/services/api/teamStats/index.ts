@@ -1,7 +1,7 @@
 import { BACKEND_HOST, BACKEND_PORT } from '..';
 import { TeamStats } from '../../../types';
 
-const path = `${BACKEND_HOST}${BACKEND_PORT}/api/v1/teams_stats`;
+const path = `${BACKEND_HOST}${BACKEND_PORT}/api/v1/team_stats`;
 export const findAllTeamStats = async (): Promise<any> => fetch(`${path}`, {
   method: 'GET',
   headers: {
