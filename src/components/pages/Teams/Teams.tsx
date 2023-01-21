@@ -21,7 +21,7 @@ export default function Teams() {
       <Container>
 
         {data && data._embedded ? (
-          <TableScrollArea data={data._embedded.teamList} />
+          <TableScrollArea data={data._embedded.teamList} resourceType={data._links.self.href.split('/').slice(-1)} hasView />
         ) : (
           <div>No results</div>
         )}

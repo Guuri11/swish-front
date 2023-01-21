@@ -21,7 +21,7 @@ export default function Players() {
       <Container>
 
         {data && data._embedded ? (
-          <TableScrollArea data={data._embedded.playerList} />
+          <TableScrollArea data={data._embedded.playerList} resourceType={data._links.self.href.split('/').slice(-1)} hasView />
         ) : (
           <div>No results</div>
         )}

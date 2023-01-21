@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createStyles, Table, ScrollArea } from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -33,14 +34,23 @@ const useStyles = createStyles((theme) => ({
 
 interface TableScrollAreaProps {
   data: any[];
+  resourceType: string;
+  hasView: boolean;
 }
 
-export default function TableScrollArea({ data }: TableScrollAreaProps) {
+export default function TableScrollArea({ data, resourceType, hasView }: TableScrollAreaProps) {
   const { classes, cx } = useStyles();
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
+
+  const handleNavigation = (id: string) => {
+    if (hasView) {
+      navigate(`/${resourceType}/${id}`);
+    }
+  };
 
   const rows = data.map((row) => (
-    <tr className={classes.tr} key={row.id}>
+    <tr className={classes.tr} key={row.id} onClick={() => { handleNavigation(row.id); }}>
       {
         Object.keys(row).map((key) => {
           if (key === '_links') {
@@ -48,7 +58,7 @@ export default function TableScrollArea({ data }: TableScrollAreaProps) {
           }
 
           if (typeof row[key] === 'object') {
-            return <td key={key}>{row[key].name}</td>;
+            return <td key={key}>{row[key]?.name || row[key]?.id}</td>;
           }
 
           return <td key={key}>{row[key]}</td>;
