@@ -35,7 +35,7 @@ export type TeamStats = {
 type Position = 'PG' | 'SG' | 'SF' | 'PF' | 'C';
 
 type PlayerStatus = 'HEALTHY' | 'DAY_TO_DAY' | 'OUT';
-type GameStatus = 'SCHEDULED' | 'IN_GAME' | 'TIMEOUT' | 'FINISHED';
+type GameStatus = 'SCHEDULED' | 'IN_GAME' | 'FINISHED' | 'TIMEOUT';
 
 export type PlayerStats = {
   id: number;
