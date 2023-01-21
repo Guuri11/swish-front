@@ -17,6 +17,7 @@ import Players from './components/pages/Players/Players';
 import Games from './components/pages/Games/Games';
 import TeamView from './components/pages/Teams/TeamView';
 import PlayerView from './components/pages/Players/PlayerView';
+import GameView from './components/pages/Games/View/GameView';
 
 const queryClient = new QueryClient();
 
@@ -59,7 +60,7 @@ function App() {
                 <Route path="/players" element={<Players />} />
                 <Route path="/players/:id" element={<PlayerView />} />
                 <Route path="/games" element={<Games />} />
-                <Route path="/games/:id" element={<Games />} />
+                <Route path="/games/:id" element={<GameView />} />
               </Route>
               <Route path="*" element={<Error404 />} />
             </Routes>
