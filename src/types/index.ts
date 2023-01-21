@@ -20,6 +20,7 @@ export type Game = {
   localScore: number;
   awayScore: number;
   sheduleDate: number;
+  gameStatus: GameStatus;
 };
 
 export type TeamStats = {
@@ -34,6 +35,7 @@ export type TeamStats = {
 type Position = 'PG' | 'SG' | 'SF' | 'PF' | 'C';
 
 type PlayerStatus = 'HEALTHY' | 'DAY_TO_DAY' | 'OUT';
+type GameStatus = 'SCHEDULED' | 'IN_GAME' | 'TIMEOUT' | 'FINISHED';
 
 export type PlayerStats = {
   id: number;
