@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { Container, Text, Title } from '@mantine/core';
 import { useParams } from 'react-router-dom';
@@ -8,12 +8,34 @@ import TableScrollArea from '../../../common/Table/Table';
 import { getPlayerStatsByGameId } from '../../../../services/api/playerStats';
 import { getGame } from '../../../../services/api/game';
 import { getTeamStatsByGame } from '../../../../services/api/teamStats';
+import { Game, PlayerStats, TeamStats } from '../../../../types';
 
 export default function GameView() {
   const { id } = useParams();
+  const [game, setGame] = useState<Game>();
+  const [playersStats, setPlayersStats] = useState<PlayerStats[]>();
+  const [teamStats, setTeamStats] = useState<TeamStats[]>();
   const gameData = useQuery(['game', id], () => getGame(id));
   const playerStatsData = useQuery(['playerStats', id], () => getPlayerStatsByGameId(id));
   const teamsStatsData = useQuery(['teamsStats', id], () => getTeamStatsByGame(id));
+
+  useEffect(() => {
+    if (gameData.status === 'success') {
+      setGame(gameData.data);
+    }
+  }, [gameData.status]);
+
+  useEffect(() => {
+    if (playerStatsData.status === 'success' && playerStatsData.data._embedded) {
+      setPlayersStats(playerStatsData.data._embedded.playerStatsList);
+    }
+  }, [playerStatsData.status]);
+
+  useEffect(() => {
+    if (teamsStatsData.status === 'success' && teamsStatsData.data._embedded) {
+      setTeamStats(teamsStatsData.data._embedded.teamStatsList);
+    }
+  }, [teamsStatsData.status]);
 
   return (
     <>
@@ -25,16 +47,16 @@ export default function GameView() {
       </div>
       )}
       <Container>
-        {gameData.data && gameData.data.id && (
+        {game && game.id && (
           <div>
-            <Title>{`${gameData.data.away.name} (${gameData.data.awayScore}) - ${gameData.data.local.name} (${gameData.data.localScore})`}</Title>
+            <Title>{`${game.away.name} (${game.awayScore}) - ${game.local.name} (${game.localScore})`}</Title>
           </div>
         )}
-        {teamsStatsData.data && teamsStatsData.data._embedded ? (
+        {teamStats ? (
           <div>
             <Text size="xl">Team Stats</Text>
             <TableScrollArea
-              data={teamsStatsData.data._embedded.teamStatsList}
+              data={teamStats}
               resourceType={teamsStatsData.data._links.self.href.split('/').slice(-1)}
               hasView
             />
@@ -42,11 +64,11 @@ export default function GameView() {
         ) : (
           <div style={{ marginBottom: 20 }}>Stats not available</div>
         )}
-        {playerStatsData.data && playerStatsData.data._embedded ? (
+        {playersStats ? (
           <div>
             <Text size="xl">Player Stats</Text>
             <TableScrollArea
-              data={playerStatsData.data._embedded.playerStatsList}
+              data={playersStats}
               resourceType={playerStatsData.data._links.self.href.split('/').slice(-1)}
               hasView
             />
