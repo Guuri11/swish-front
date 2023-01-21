@@ -10,6 +10,14 @@ export const findAllPlayers = async (): Promise<any> => fetch(`${path}`, {
   },
 }).then((response) => response.json());
 
+export const findAllPlayersByTeam = async (id:string): Promise<any> => fetch(`${path}/team/${id}`, {
+  method: 'GET',
+  headers: {
+    'Content-type': 'application/json',
+    Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+  },
+}).then((response) => response.json());
+
 export const getPlayer = async (id: string): Promise<any> => fetch(`${path}/${id}`, {
   method: 'GET',
   headers: {
