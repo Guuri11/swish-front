@@ -21,7 +21,7 @@ export default function Games() {
       <Container>
 
         {data && data._embedded ? (
-          <TableScrollArea data={data._embedded.gameList} />
+          <TableScrollArea data={data._embedded.gameList} resourceType={data._links.self.href.split('/').slice(-1)} hasView />
         ) : (
           <div>No results</div>
         )}
