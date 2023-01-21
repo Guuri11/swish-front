@@ -61,6 +61,10 @@ export default function TableScrollArea({ data, resourceType, hasView }: TableSc
             return <td key={key}>{row[key]?.name || row[key]?.id}</td>;
           }
 
+          if (typeof row[key] === 'boolean') {
+            return <td key={key}>{row[key] ? '✅' : '❌'}</td>;
+          }
+
           return <td key={key}>{row[key]}</td>;
         })
       }
