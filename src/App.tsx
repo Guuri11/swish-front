@@ -11,7 +11,6 @@ import {
 import Error404 from './components/pages/Error404/Error404';
 import AuthWrapper from './components/pages/Auth/AuthWrapper';
 import Authentication from './components/pages/Authentication/Authentication';
-import Home from './components/pages/Home/Home';
 import Teams from './components/pages/Teams/Teams';
 import Players from './components/pages/Players/Players';
 import Games from './components/pages/Games/Games';
@@ -54,7 +53,7 @@ function App() {
             <Routes>
               <Route path="/" element={<AuthWrapper />}>
                 <Route path="/sign-in" element={<Authentication />} />
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Games />} />
                 <Route path="/teams" element={<Teams />} />
                 <Route path="/teams/:id" element={<TeamView />} />
                 <Route path="/players" element={<Players />} />
