@@ -26,7 +26,7 @@ export const getPlayerStatsByPlayerId = async (playerId: string): Promise<any> =
   },
 }).then((response) => response.json());
 
-export const getPlayerStatsByGameId = async (gameId: string): Promise<any> => fetch(`${path}/player/${gameId}`, {
+export const getPlayerStatsByGameId = async (gameId: string): Promise<any> => fetch(`${path}/game/${gameId}`, {
   method: 'GET',
   headers: {
     'Content-type': 'application/json',

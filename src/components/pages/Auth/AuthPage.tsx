@@ -16,6 +16,9 @@ const AuthPage: React.FunctionComponent = observer((): JSX.Element => {
       userData.then((user) => {
         authenticationStore.setUser(user);
         setLoading(false);
+      }).catch(() => {
+        sessionStorage.removeItem('token');
+        window.location.reload();
       });
     } else {
       navigate('/sign-in');
