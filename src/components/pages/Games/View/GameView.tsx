@@ -55,8 +55,8 @@ export default function GameView() {
 
   useEffect(() => {
     if (teamsStatsData.status === 'success' && teamsStatsData.data._embedded) {
-      const localTeamStatsAux = teamsStatsData.data._embedded.teamStatsList[1];
-      const awayTeamStatsAux = teamsStatsData.data._embedded.teamStatsList[0];
+      const localTeamStatsAux = teamsStatsData.data._embedded.teamStatsList[0];
+      const awayTeamStatsAux = teamsStatsData.data._embedded.teamStatsList[1];
 
       setLocalTeamStats(localTeamStatsAux);
       setAwayTeamStats(awayTeamStatsAux);
