@@ -126,11 +126,11 @@ export default function GameView() {
             <Title>{`${game?.away.name} (${game?.awayScore}) - ${game?.local.name} (${game?.localScore})`}</Title>
           </div>
           )}
-          {teamsStatsData.data?._embedded?.teamStatsList ? (
+          {localTeamStats && awayTeamStats ? (
             <div>
               <Text size="xl">Team Stats</Text>
               <TableScrollArea
-                data={teamsStatsData.data._embedded.teamStatsList}
+                data={[localTeamStats, awayTeamStats]}
                 resourceType={teamsStatsData.data._links.self.href.split('/').slice(-1)}
                 hasView
               />
@@ -142,7 +142,16 @@ export default function GameView() {
             <div>
               <Text size="xl">Player Stats</Text>
               <TableScrollArea
-                data={playersStats}
+                data={playersStats.sort((a, b) => {
+                  if (a.id < b.id) {
+                    return -1;
+                  }
+                  if (a.id > b.id) {
+                    return 1;
+                  }
+                  // a must be equal to b
+                  return 0;
+                })}
                 resourceType={playerStatsData.data._links.self.href.split('/').slice(-1)}
                 hasView
               />
